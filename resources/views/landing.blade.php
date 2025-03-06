@@ -34,21 +34,25 @@
 
     <section id="features" class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-3xl font-semibold text-gray-800 mb-8 text-center">Our Key Features</h2>
+            <h2 class="text-3xl font-semibold text-gray-800 mb-8 text-center">Help</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
                 <div class="bg-white shadow-lg rounded-lg p-6">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Feature 1</h3>
-                    <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat vestibulum urna eu auctor.</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Investec Developer Project Repo</h3>
+                    <p class="text-gray-600">Explore the code repository for the Investec Developer Project on GitHub.</p>
+                    <a href="https://github.com/alecshelembe/investec-developer-project-repo" class="text-blue-500 hover:underline" target="_blank">View Repo</a>
                 </div>
                 <div class="bg-white shadow-lg rounded-lg p-6">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Feature 2</h3>
-                    <p class="text-gray-600">Integer auctor magna sit amet mi posuere, in malesuada libero vehicula. Cras id risus nulla.</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Investec API Documentation</h3>
+                    <p class="text-gray-600">Check out the release notes and API documentation for SA PB Account Information.</p>
+                    <a href="https://developer.investec.com/za/api-products/documentation/SA_PB_Account_Information#section/Release-Notes" class="text-blue-500 hover:underline" target="_blank">View Documentation</a>
                 </div>
                 <div class="bg-white shadow-lg rounded-lg p-6">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Feature 3</h3>
-                    <p class="text-gray-600">Nullam non urna vitae felis suscipit tempus. Proin interdum, sem ut hendrerit auctor, nisi metus iaculis lectus.</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Investec Developer Community</h3>
+                    <p class="text-gray-600">Join the Investec Developer Community to stay updated and get support from fellow developers.</p>
+                    <a href="https://github.com/Investec-Developer-Community" class="text-blue-500 hover:underline" target="_blank">Join the Community</a>
                 </div>
             </div>
         </div>
     </section>
+
 @endsection
