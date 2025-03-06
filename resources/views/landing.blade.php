@@ -6,6 +6,12 @@
     <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white text-center py-10">
         <h1 class="text-5xl font-bold mb-6">Welcome Investec Developer</h1>
         <p class="text-xl mb-4">Explore the best in coding with us and look around.</p>
+        <!-- Example button to trigger the API call -->
+
+        <a href="{{ route('fetch.account.info') }}" class="bg-blue-600 text-white py-3 px-6 rounded-lg text-lg hover:bg-blue-500 transition">
+            Fetch Account Info
+        </a>
+
         <!-- <a href="#features" class="bg-yellow-500 text-black py-3 px-6 rounded-lg text-lg hover:bg-yellow-400 transition">Explore Features</a> -->
     </div>
 

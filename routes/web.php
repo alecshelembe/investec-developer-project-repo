@@ -3,6 +3,8 @@
 use App\Http\Controllers\OAuthController;
 use App\Http\Controllers\LandingPageController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,5 +19,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [OAuthController::class, 'index']);
 
-Route::get('/oauth/authenticate', [OAuthController::class, 'authenticate'])->name('authenticate');
+Route::get('/fetch-account-info', [OAuthController::class, 'fetchAccountInfo'])->name('fetch.account.info');
 
+Route::get('/oauth/authenticate', [OAuthController::class, 'authenticate'])->name('authenticate');

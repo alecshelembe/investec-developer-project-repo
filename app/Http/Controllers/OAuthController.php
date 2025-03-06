@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\OAuthService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class OAuthController extends Controller
 {
@@ -14,62 +15,111 @@ class OAuthController extends Controller
         $this->oauthService = $oauthService;
     }
 
+    // Helper method to get or retrieve access token
+    protected function getAccessTokenOrRedirect()
+    {
+        // Check if access token exists in the session
+        $accessToken = session('access_token');
+        
+        // If no token exists, retrieve it using the OAuthService
+        if (!$accessToken) {
+            $accessToken = $this->oauthService->getAccessToken();
+
+            // If token retrieval fails, return error
+            if (!$accessToken) {
+                return null;  // Indicating failure to retrieve access token
+            }
+
+            // Store the token in the session
+            session(['access_token' => $accessToken]);
+        }
+
+        return $accessToken;
+    }
 
     public function index()
     {
-        // Check if the access token exists in the session
-        $accessToken = session('access_token');
+        // Attempt to retrieve the access token
+        $accessToken = $this->getAccessTokenOrRedirect();
 
-        // If no token exists, try to retrieve a new one
+        // If no token exists, return an error message to the view
         if (!$accessToken) {
-            // Retrieve a new access token
-            $accessToken = $this->oauthService->getAccessToken();
-            
-            if ($accessToken) {
-                // Store the token in the session if retrieved successfully
-                session(['access_token' => $accessToken]);
-            } else {
-                // Return an error if the token cannot be retrieved
-                return view('landing', [
-                    'accessToken' => null,
-                    'error' => 'Failed to retrieve access token.'
-                ]);
-            }
+            return view('landing', [
+                'error' => 'Failed to retrieve access token. Please authenticate.'
+            ]);
         }
 
-        // Pass the access token to the view
+        // Return the landing view with the access token
         return view('landing', compact('accessToken'));
     }
 
+  public function fetchAccountInfo()
+    {
+        // Retrieve the access token
+        $accessToken = $this->getAccessTokenOrRedirect();
+
+        // If no token exists, return an error message to the view
+        if (!$accessToken) {
+            return view('landing', [
+                'error' => 'Access token not found. Please authenticate first.'
+            ]);
+        }
+
+        // Make the API request using the access token
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $accessToken,
+        ])->get('https://openapisandbox.investec.com/za/pb/v1/accounts');
+
+         // Check if the request was successful
+        if ($response->successful()) {
+            // Get the JSON response
+            $accountData = $response->json();
+
+            // Debug: Log the response to see the structure
+            // Log::info('Account Data:', $accountData);
+
+            // Pass the account data to the view
+            return view('account-info', [
+                'accountData' => $accountData, // Pass the account data to the view
+            ]);
+
+        }
+
+        // If the request failed, return an error message to the view
+        return response()->json([
+            'susccess' => false,
+            'error' => 'Failed to fetch account information from Investec.',
+        ], 400);
+    }  
+
     public function authenticate()
     {
-        // Check if access token already exists in the session
+        // Check if the access token already exists
         if (session()->has('access_token')) {
             return response()->json([
                 'success' => false,
                 'error' => 'Access token already exists.',
             ], 400);
         }
-    
-        // Retrieve a new access token
+
+        // Retrieve a new access token using the OAuthService
         $accessToken = $this->oauthService->getAccessToken();
-    
-        // Debugging line to check token
-        dd($accessToken);  // This will stop execution and show the value of the access token
-    
-        if ($accessToken) {
-            session(['access_token' => $accessToken]); // Store the token in session
-    
+
+        // If no access token is retrieved, return an error
+        if (!$accessToken) {
             return response()->json([
-                'success' => true,
-                'access_token' => $accessToken,
-            ]);
+                'success' => false,
+                'error' => 'Failed to retrieve access token.',
+            ], 400);
         }
-    
+
+        // Store the token in the session
+        session(['access_token' => $accessToken]);
+
+        // Return the access token in the response
         return response()->json([
-            'success' => false,
-            'error' => 'Failed to retrieve access token',
-        ], 400);
+            'success' => true,
+            'access_token' => $accessToken,
+        ]);
     }
-    
 }
