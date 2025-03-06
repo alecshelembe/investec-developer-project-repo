@@ -6,10 +6,18 @@ use GuzzleHttp\Client;
 
 class OAuthService
 {
-    private $clientId = 'yAxzQRFX97vOcyQAwluEU6H6ePxMA5eY';
-    private $clientSecret = '4dY0PjEYqoBrZ99r';
-    private $apiKey = 'your-x-api-key'; // Replace with actual x-api-key
-    private $tokenUrl = 'https://openapisandbox.investec.com/identity/v2/oauth2/token';
+    private $clientId;
+    private $clientSecret;
+    private $apiKey;
+    private $tokenUrl;
+
+    public function __construct()
+    {
+        $this->clientId = env('INVESTEC_CLIENT_ID');
+        $this->clientSecret = env('INVESTEC_CLIENT_SECRET');
+        $this->apiKey = env('INVESTEC_API_KEY');
+        $this->tokenUrl = env('INVESTEC_TOKEN_URL');
+    }
 
     public function getAccessToken()
     {
