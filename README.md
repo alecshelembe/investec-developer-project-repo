@@ -1,6 +1,6 @@
 I built this at an Investec Developer Event
 
-The project by default connects to the sandbox you can change this in you env file
+The project by default connects to the sandbox you can change these credentials in your env file
 
 ![alt text](image-1.png)
 ![alt text](image-2.png)
