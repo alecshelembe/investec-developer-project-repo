@@ -20,5 +20,6 @@ use Illuminate\Support\Facades\Http;
 Route::get('/', [OAuthController::class, 'index']);
 
 Route::get('/fetch-account-info', [OAuthController::class, 'fetchAccountInfo'])->name('fetch.account.info');
+Route::get('/fetch-account-balance/{accountId}', [OAuthController::class, 'fetchAccountBalance'])->name('fetchAccountBalance.account.info');
 
 Route::get('/oauth/authenticate', [OAuthController::class, 'authenticate'])->name('authenticate');

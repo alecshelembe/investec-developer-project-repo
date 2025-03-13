@@ -75,6 +75,7 @@ class OAuthController extends Controller
             // Get the JSON response
             $accountData = $response->json();
 
+            // dd($accountData);
             // Debug: Log the response to see the structure
             // Log::info('Account Data:', $accountData);
 
@@ -122,4 +123,43 @@ class OAuthController extends Controller
             'access_token' => $accessToken,
         ]);
     }
+
+    public function fetchAccountBalance($accountId)
+{
+    // Retrieve the access token
+    $accessToken = $this->getAccessTokenOrRedirect();
+
+    if (!$accessToken) {
+        return view('landing', [
+            'error' => 'Access token not found. Please authenticate first.'
+        ]);
+    }
+
+    // Make API request
+    $response = Http::withHeaders([
+        'Authorization' => 'Bearer ' . $accessToken,
+    ])->get("https://openapisandbox.investec.com/za/pb/v1/accounts/{$accountId}/balance");
+
+    if ($response->successful()) {
+        $balanceData = $response->json();
+
+        if (!isset($balanceData['data'])) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Invalid response from Investec API.',
+            ], 500);
+        }
+
+        return view('account-balance', [
+            'balance' => $balanceData['data'],
+        ]);
+    }
+
+    return response()->json([
+        'success' => false,
+        'error-text' => $response,
+        'error' => 'Failed to fetch account balance from Investec.',
+    ], $response->status());
+}
+
 }

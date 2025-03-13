@@ -13,7 +13,8 @@
                     @foreach($accountData['data']['accounts'] as $account)
                         <!-- Account Card -->
                         <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4">{{ $account['referenceName'] }}</h3>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ $account['referenceName'] }}</h3>
+                            <h3 class="text-gray-600 mb-4">{{ $account['accountId'] }}</h3>
                             
                             <div class="space-y-4">
                                 <!-- Account Number -->
@@ -40,6 +41,11 @@
                                     <p class="text-gray-600">{{ $account['kycCompliant'] ? 'Yes' : 'No' }}</p>
                                 </div>
                             </div>
+
+                            <!-- Fetch Balance Button for Each Account -->
+                            <button onclick="fetchBalance('{{ $account['accountId'] }}')" class="bg-blue-600 text-white my-2 py-2 px-4 rounded-lg text-lg hover:bg-blue-500 transition inline-block w-full">
+                                Fetch Balance
+                            </button>
                         </div>
                     @endforeach
                 </div>
@@ -56,5 +62,12 @@
                 </div>
             @endif
         </div>
+
+        <script>
+            function fetchBalance(accountId) {
+                // Redirect to the correct route with the accountId
+                window.location.href = "{{ route('fetchAccountBalance.account.info', ['accountId' => '__ID__']) }}".replace('__ID__', encodeURIComponent(accountId));
+            }
+        </script>
     </div>
 @endsection
