@@ -60,6 +60,9 @@
                 <div class="mt-6">
                     <a href="{{ route('fetch.account.info') }}" class="btn mx-2">Fetch Account Info</a>
                 </div>
+                <!-- <div class="mt-6">
+                    <a href="{{ route('fetch.cards') }}" class="btn mx-2">Fetch cards</a>
+                </div> -->
             </div>
         </section>
     @else

@@ -162,4 +162,38 @@ class OAuthController extends Controller
     ], $response->status());
 }
 
+public function fetchCards()
+{
+    // Retrieve the access token
+    $accessToken = $this->getAccessTokenOrRedirect();
+
+    if (!$accessToken) {
+        return response()->json([
+            'success' => false,
+            'error' => 'Access token not found. Please authenticate first.'
+        ], 401);
+    }
+
+    // Make API request to /cards endpoint
+    $response = Http::withHeaders([
+        'Authorization' => 'Bearer ' . $accessToken,
+    ])->get("https://openapisandbox.investec.com/za/pb/v1/cards");
+
+    if ($response->successful()) {
+        $cardsData = $response->json();
+
+        return response()->json([
+            'success' => true,
+            'cards' => $cardsData,
+        ]);
+    }
+
+    return response()->json([
+        'success' => false,
+        'error' => 'Failed to fetch cards from Investec.',
+        'error-text' => $response->body(),
+    ], $response->status());
+}
+
+
 }
