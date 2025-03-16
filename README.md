@@ -1,9 +1,8 @@
-I built this at an Investec Developer Event
+Hi, I built this at an Investec developer event feel free to use this as you like in good faith, Thanks.
+The project by default connects to the sandbox environment. You can change the credentials in your env file.
 
-The project by default connects to the sandbox you can change these credentials in your env file
-
-![alt text](image-1.png)
-![alt text](image-2.png)
+![alt text](image-5.png)
+![alt text](image-4.png)
 ![alt text](image-3.png)
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
