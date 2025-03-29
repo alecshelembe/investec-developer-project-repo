@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Services\OAuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\JsonResponse;
+
 
 class OAuthController extends Controller
 {
