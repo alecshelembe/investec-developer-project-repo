@@ -16,6 +16,36 @@ class ApiAuthController extends Controller
     {
         $this->oauthService = $oauthService;
     }
+
+    public function fetchAccountBalance(Request $request)
+    {
+        $accountId = $request->input('accountId');
+        $accessToken = $request->input('access_token');
+
+        if (!$accessToken) {
+            return response()->json(['error' => 'The Access token is required.'], 400);
+        }
+
+        // Make API request
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $accessToken,
+        ])->get("https://openapisandbox.investec.com/za/pb/v1/accounts/{$accountId}/balance");
+
+        if ($response->successful()) {
+            return response()->json([
+                'success' => true,
+                'balance' => $response->json(),
+            ]);
+            
+        } else {
+            return response()->json([
+                'success' => false,
+                'error' => 'Failed to fetch account balance.',
+            ], 500);
+        }   
+
+    }
+
     public function fetchAccountInfo(Request $request)
     {
         try {
