@@ -14,6 +14,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'authenticate', // Add this to disable CSRF for the route
         'fetchAccountInfo', // Add this to disable CSRF for the route
+        'location',  // Exclude this route from CSRF protection
         'fetchAccountBalance', // Add this to disable CSRF for the route
     ];
 }

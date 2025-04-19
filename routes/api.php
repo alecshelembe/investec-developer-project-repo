@@ -23,4 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/fetch-account-info', [ApiAuthController::class, 'fetchAccountInfo']);
 Route::post('/authenticate', [ApiAuthController::class, 'authenticate']);
 Route::post('/fetch-account-balance', [ApiAuthController::class, 'fetchAccountBalance']);
-
+Route::post('/location', [ApiAuthController::class, 'store', 'location']);
+Route::get('/main-notification', [ApiAuthController::class, 'main_notification']);
